@@ -1,23 +1,22 @@
 package com.danila.applications.mappers;
 
 import com.danila.applications.entities.Phone;
-import com.danila.applications.model.LoanApplication;
 import com.danila.applications.model.Person;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface PhoneMapper {
 
-    public Phone toPhoneEntity(Person person);
+    PhoneMapper INSTANCE = Mappers.getMapper(PhoneMapper.class);
 
-    @AfterMapping
-    default void typeInit(@MappingTarget Phone phone, Person person){
-        if (person.getMobilePhone() != null){
-            phone.setType("MOBILE");
-            phone.setPhoneNumber(Integer.parseInt(person.getMobilePhone()));
-        } else if (person.getHomePhone() != null){
-            phone.setType("HOME");
-            phone.setPhoneNumber(Integer.parseInt(person.getHomePhone()));
-        }
-    }
+    @Mapping(constant = "HOME", target = "type")
+    @Mapping(source = "homePhone", target = "phoneNumber")
+    Phone toHomePhoneEntity(Person person);
+
+    @Mapping(constant = "MOBILE", target = "type")
+    @Mapping(source = "mobilePhone", target = "phoneNumber")
+    Phone toMobilePhoneEntity(Person person);
+
+
 }

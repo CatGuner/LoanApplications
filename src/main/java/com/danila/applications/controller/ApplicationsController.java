@@ -1,11 +1,10 @@
 package com.danila.applications.controller;
 
 import com.danila.applications.entities.Client;
-import com.danila.applications.mappers.ClientMapper;
+import com.danila.applications.mappers.ApplicationMapper;
 import com.danila.applications.model.LoanApplication;
 import com.danila.applications.service.ApplicationService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,20 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 public class ApplicationsController {
 
-    private final ApplicationService applicationService;
-
-    private final ClientMapper mapper;
-
+    private ApplicationService applicationService;
 
 
     @PostMapping(path = "/create")
-    public Client postApplication(@RequestBody LoanApplication application){
-        return mapper.toClientEntity(application);
+    public void postApplication(@RequestBody LoanApplication application){
+        applicationService.save(ApplicationMapper.INSTANCE.toApplicationEntity(application));
     }
 
     @GetMapping(path = "/client/{number}")
     public Client getApplication(@PathVariable Long number){
-        return applicationService.getApplicationEntity(number);
+//        return applicationService.getApplicationEntity(number);
+        return null;
     }
 
     @GetMapping(path = "/client/all")
@@ -35,13 +32,3 @@ public class ApplicationsController {
         return applicationService.getAll();
     }
 }
-
-
-/* Description:
-
-Parameter 1 of constructor in com.danila.applications.controller.ApplicationsController required a bean of type 'com.danila.applications.mappers.ClientMapper' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'com.danila.applications.mappers.ClientMapper' in your configuration.*/

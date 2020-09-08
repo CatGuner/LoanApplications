@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Phone{
 
     @Id
@@ -23,5 +25,6 @@ public class Phone{
 
     String type;
 
-    Integer phoneNumber;
+    @Column(length = 11)
+    Long phoneNumber;
 }

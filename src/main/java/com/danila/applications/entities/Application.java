@@ -3,15 +3,14 @@ package com.danila.applications.entities;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Application {
 
     @Id
@@ -22,7 +21,7 @@ public class Application {
 
     Long amount;
 
-    Long currency;
+    String currency;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "applicant_id")

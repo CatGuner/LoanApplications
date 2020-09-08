@@ -1,9 +1,7 @@
 package com.danila.applications.service;
 
-import com.danila.applications.entities.Client;
+import com.danila.applications.entities.Application;
 import com.danila.applications.repositories.ApplicationRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +12,27 @@ import java.util.List;
 public class ApplicationServiceImpl implements ApplicationService{
 
     @Autowired
-    private ApplicationRepository client;
+    private ApplicationRepository applicationRepository;
 
 
     @Override
-    public Client getApplicationEntity(Long id) {
-        return client.getById(id);
+    public Application getApplicationEntity(Integer id) {
+        return applicationRepository.getById(id);
     }
 
     @Override
     public List getAll() {
-        return (List) client.findAll();
+        return (List) applicationRepository.findAll();
     }
 
     @Override
-    public void save(Client client) {
-        this.client.save(client);
+    public void save(Application application) {
+        connectPhoneNumbersWithClients(application);
+        this.applicationRepository.save(application);
+    }
+
+    private void connectPhoneNumbersWithClients(Application application){
+        application.getApplicant().getPhones().forEach(phone -> phone.setClient(application.getApplicant()));
+        application.getGuarantor().getPhones().forEach(phone -> phone.setClient(application.getGuarantor()));
     }
 }
