@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoanApplication {
     Long number;
-    Integer amount;
+    Long amount;
     String currency;
     Person applicant;
     Person guarantor;
