@@ -1,5 +1,6 @@
 package com.danila.applications.mappers;
 
+import com.danila.applications.entities.Client;
 import com.danila.applications.entities.Phone;
 import com.danila.applications.model.Person;
 import org.mapstruct.*;
@@ -18,5 +19,16 @@ public interface PhoneMapper {
     @Mapping(source = "mobilePhone", target = "phoneNumber")
     Phone toMobilePhoneEntity(Person person);
 
+    void fromPhoneEntity(@MappingTarget Person person, Client client);
 
+    @AfterMapping
+    default void convertPhones(@MappingTarget Person person, Client client){
+        for (Phone item : client.getPhones()){
+            if ("MOBILE".equals(item.getType())){
+                person.setMobilePhone(item.getPhoneNumber().toString());
+            } else if ("HOME".equals(item.getType())){
+                person.setHomePhone(item.getPhoneNumber().toString());
+            }
+        }
+    }
 }

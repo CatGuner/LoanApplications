@@ -12,9 +12,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoanApplication {
-    Long applicationNumber;
+    Long number;
     Integer amount;
     String currency;
-    Applicant applicant;
-    Guarantor guarantor;
+    Person applicant;
+    Person guarantor;
 }

@@ -16,8 +16,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 
 
     @Override
-    public Application getApplicationEntity(Integer id) {
-        return applicationRepository.getById(id);
+    public Application getApplicationEntity(Long number) {
+        return applicationRepository.getByApplicationNumber(number);
     }
 
     @Override

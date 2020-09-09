@@ -1,18 +1,17 @@
 package com.danila.applications.controller;
 
-import com.danila.applications.entities.Client;
 import com.danila.applications.mappers.ApplicationMapper;
 import com.danila.applications.model.LoanApplication;
 import com.danila.applications.service.ApplicationService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
 public class ApplicationsController {
 
+    @Autowired
     private ApplicationService applicationService;
 
 
@@ -21,13 +20,14 @@ public class ApplicationsController {
         applicationService.save(ApplicationMapper.INSTANCE.toApplicationEntity(application));
     }
 
-    @GetMapping(path = "/client/{number}")
-    public Client getApplication(@PathVariable Long number){
-//        return applicationService.getApplicationEntity(number);
-        return null;
+    @GetMapping(path = "/application/{number}")
+    public LoanApplication getApplication(@PathVariable Long number){
+        return ApplicationMapper.INSTANCE.fromApplicationEntity(
+                applicationService.getApplicationEntity(number)
+        );
     }
 
-    @GetMapping(path = "/client/all")
+    @GetMapping(path = "/application/all")
     public List getApplication(){
         return applicationService.getAll();
     }

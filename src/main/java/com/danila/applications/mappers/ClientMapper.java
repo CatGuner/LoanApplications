@@ -26,4 +26,14 @@ public abstract class ClientMapper {
         client.addPhone(PhoneMapper.INSTANCE.toMobilePhoneEntity(person));
     }
 
+    @Mapping(target = "passport",
+            expression = "java(client.getPassportSeries().toString() + client.getPassportNumber().toString() )")
+    public abstract Person fromClientEntity(Client client);
+
+    @AfterMapping
+    void addPhonesIntoPerson(@MappingTarget Person person, Client client){
+        PhoneMapper.INSTANCE.fromPhoneEntity(person, client);
+    }
+
+
 }
