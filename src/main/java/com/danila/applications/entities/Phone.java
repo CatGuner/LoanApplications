@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "client")
 public class Phone{
 
     @Id
@@ -27,4 +29,6 @@ public class Phone{
 
     @Column(length = 11)
     Long phoneNumber;
+
+
 }

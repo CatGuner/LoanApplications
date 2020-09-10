@@ -16,19 +16,19 @@ public class ApplicationsController {
 
 
     @PostMapping(path = "/create")
-    public void postApplication(@RequestBody LoanApplication application){
-        applicationService.save(ApplicationMapper.INSTANCE.toApplicationEntity(application));
+    public void postApplication(@RequestBody LoanApplication application) {
+        applicationService.save(application);
     }
 
     @GetMapping(path = "/application/{number}")
-    public LoanApplication getApplication(@PathVariable Long number){
+    public LoanApplication getApplication(@PathVariable Long number) {
         return ApplicationMapper.INSTANCE.fromApplicationEntity(
                 applicationService.getApplicationEntity(number)
         );
     }
 
     @GetMapping(path = "/application/all")
-    public List getApplication(){
+    public List getApplication() {
         return applicationService.getAll();
     }
 }

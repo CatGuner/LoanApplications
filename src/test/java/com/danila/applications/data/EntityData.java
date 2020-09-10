@@ -1,17 +1,13 @@
-package com.danila.applications;
+package com.danila.applications.data;
 
 import com.danila.applications.entities.Application;
 import com.danila.applications.entities.Client;
 import com.danila.applications.entities.Phone;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
 public class EntityData {
 
-    public static Application application;
-
-    public EntityData(){
-        application = new Application();
+    public static Application createApplicationEntity() {
+        Application application = new Application();
         application.setAmount(2L);
         application.setApplicationNumber(3L);
         application.setCurrency("RUBLES");
@@ -22,17 +18,15 @@ public class EntityData {
         application.getApplicant().setPassportSeries(4910);
         application.getApplicant().setPassportNumber(386273);
 
-        Phone applicantMobilePhone = new Phone();
-        applicantMobilePhone.setPhoneNumber(79096841230L);
-        applicantMobilePhone.setType("MOBILE");
-        applicantMobilePhone.setClient(application.getApplicant());
-        application.getApplicant().addPhone(applicantMobilePhone);
-
         Phone applicantHomePhone = new Phone();
         applicantHomePhone.setPhoneNumber(2349610L);
         applicantHomePhone.setType("HOME");
-        applicantHomePhone.setClient(application.getApplicant());
         application.getApplicant().addPhone(applicantHomePhone);
+
+        Phone applicantMobilePhone = new Phone();
+        applicantMobilePhone.setPhoneNumber(79096841230L);
+        applicantMobilePhone.setType("MOBILE");
+        application.getApplicant().addPhone(applicantMobilePhone);
 
         application.setGuarantor(new Client());
         application.getGuarantor().setFirstName("TestGuarantorFirstName");
@@ -40,16 +34,17 @@ public class EntityData {
         application.getGuarantor().setPassportSeries(4911);
         application.getGuarantor().setPassportNumber(756834);
 
-        Phone gMobilePhone = new Phone();
-        gMobilePhone.setPhoneNumber(79034568822L);
-        gMobilePhone.setType("MOBILE");
-        gMobilePhone.setClient(application.getGuarantor());
-        application.getGuarantor().addPhone(applicantMobilePhone);
 
         Phone gHomePhone = new Phone();
         gHomePhone.setPhoneNumber(2341298L);
         gHomePhone.setType("HOME");
-        gHomePhone.setClient(application.getGuarantor());
-        application.getGuarantor().addPhone(applicantHomePhone);
+        application.getGuarantor().addPhone(gHomePhone);
+
+        Phone gMobilePhone = new Phone();
+        gMobilePhone.setPhoneNumber(79034568822L);
+        gMobilePhone.setType("MOBILE");
+        application.getGuarantor().addPhone(gMobilePhone);
+
+        return application;
     }
 }

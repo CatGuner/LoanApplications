@@ -3,7 +3,10 @@ package com.danila.applications.mappers;
 import com.danila.applications.entities.Client;
 import com.danila.applications.entities.Phone;
 import com.danila.applications.model.Person;
-import org.mapstruct.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -22,11 +25,11 @@ public interface PhoneMapper {
     void fromPhoneEntity(@MappingTarget Person person, Client client);
 
     @AfterMapping
-    default void convertPhones(@MappingTarget Person person, Client client){
-        for (Phone item : client.getPhones()){
-            if ("MOBILE".equals(item.getType())){
+    default void convertPhones(@MappingTarget Person person, Client client) {
+        for (Phone item : client.getPhones()) {
+            if ("MOBILE".equals(item.getType())) {
                 person.setMobilePhone(item.getPhoneNumber().toString());
-            } else if ("HOME".equals(item.getType())){
+            } else if ("HOME".equals(item.getType())) {
                 person.setHomePhone(item.getPhoneNumber().toString());
             }
         }
