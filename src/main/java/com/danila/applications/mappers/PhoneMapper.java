@@ -26,12 +26,13 @@ public interface PhoneMapper {
 
     @AfterMapping
     default void convertPhones(@MappingTarget Person person, Client client) {
-        for (Phone item : client.getPhones()) {
-            if ("MOBILE".equals(item.getType())) {
-                person.setMobilePhone(item.getPhoneNumber().toString());
-            } else if ("HOME".equals(item.getType())) {
-                person.setHomePhone(item.getPhoneNumber().toString());
+        client.getPhones().forEach(item -> {
+            switch (item.getType()){
+                case "HOME":
+                    person.setHomePhone(String.valueOf(item.getPhoneNumber()));
+                case "MOBILE":
+                    person.setMobilePhone(String.valueOf(item.getPhoneNumber()));
             }
-        }
+        });
     }
 }
